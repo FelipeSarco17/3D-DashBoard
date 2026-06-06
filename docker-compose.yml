@@ -1,0 +1,55 @@
+name: 3D-Dashboard
+
+services:
+    frontend:
+        container_name: 3D-Dashboard-Frontend
+        build: 
+            context: ./FrontEnd
+            dockerfile: Dockerfile.dev
+        ports:
+            -"5173:5173"
+        volumes:
+            - ./FrontEnd:/app
+        networks:
+            - frontend
+            
+    
+    backend:
+        container_name: 3D-Dashboard-Backend
+        build: 
+            context: ./BackEnd
+            dockerfile: Dockerfile.dev
+        ports:
+            -"3000:3000"
+        volumes:
+            - ./BackEnd:/app
+        networks:
+            - frontend
+            - backend
+        depends_on:
+            database:
+                condition: service_healthy
+
+
+    database:
+        container_name: 3D-Dashboard-Database
+        image: postgres:latest
+        environment:
+            DATABASE_USER: postgres
+            DATABASE_PASSWORD: postgres
+            DATABASE_NAME: 3D-Dashboard-DB
+            ports:
+                -"5432:5432"
+            volumes:
+                - 3D-Dashboard-Database-volume:/var/lib/postgresql/data
+            networks:
+                - backend
+
+
+networks:
+    frontend:
+    backend:
+
+volumes:
+    3D-Dashboard-Database-volume:
+
