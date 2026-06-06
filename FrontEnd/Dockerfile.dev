@@ -1,0 +1,12 @@
+# syntax=docker/dockersyntax:1
+
+FROM node:last
+
+COPY . ./3D-DashBoard/FrontEnd
+
+WORKDIR /3D-DashBoard/FrontEnd
+
+RUN npm install
+
+EXPOSE 5173
+
