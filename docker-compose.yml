@@ -9,7 +9,7 @@ services:
         ports:
             -"5173:5173"
         volumes:
-            - ./FrontEnd:/app
+            - ./3D-Dashboard:/FrontEnd
         networks:
             - frontend
             
@@ -22,7 +22,7 @@ services:
         ports:
             -"3000:3000"
         volumes:
-            - ./BackEnd:/app
+            - ./3D-Dashboard:/BackEnd
         networks:
             - frontend
             - backend
