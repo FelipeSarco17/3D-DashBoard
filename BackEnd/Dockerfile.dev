@@ -1,8 +1,6 @@
-# syntax=docker/dockerfile:1
-
 #Usa como base la imagen oficial de Node.js
-FROM node:last
-
+FROM node:24 AS development
+ENV NODE_ENV development
 #Copia todos los archivos del proyecto en el directorio /3D-DashBoard/BackEnd del contendor
 COPY ./ ./3D-DashBoard/BackEnd
 
@@ -13,4 +11,6 @@ WORKDIR /3D-DashBoard/BackEnd/src
 RUN npm install
 
 EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
 

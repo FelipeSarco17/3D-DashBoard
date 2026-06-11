@@ -1,6 +1,5 @@
-# syntax=docker/dockersyntax:1
-
-FROM node:last
+FROM node:24 AS development
+ENV NODE_ENV development
 
 COPY . ./3D-DashBoard/FrontEnd
 
@@ -9,4 +8,6 @@ WORKDIR /3D-DashBoard/FrontEnd
 RUN npm install
 
 EXPOSE 5173
+
+CMD ["npm", "run", "dev", "--", "--host"]
 

@@ -7,12 +7,12 @@ services:
             context: ./FrontEnd
             dockerfile: Dockerfile.dev
         ports:
-            -"5173:5173"
+            - "5173:5173"
         volumes:
             - ./3D-Dashboard:/FrontEnd
         networks:
             - frontend
-            
+        command: npm run dev -- --host
     
     backend:
         container_name: 3D-Dashboard-Backend
@@ -20,31 +20,37 @@ services:
             context: ./BackEnd
             dockerfile: Dockerfile.dev
         ports:
-            -"3000:3000"
+            - "3000:3000"
         volumes:
-            - ./3D-Dashboard:/BackEnd
+            - .:/BackEnd
         networks:
             - frontend
             - backend
         depends_on:
             database:
                 condition: service_healthy
+        command: npm run dev
 
 
     database:
         container_name: 3D-Dashboard-Database
-        image: postgres:latest
+        image: postgres:16-alpine
+        restart: unless-stopped
         environment:
-            DATABASE_USER: postgres
-            DATABASE_PASSWORD: postgres
-            DATABASE_NAME: 3D-Dashboard-DB
-            ports:
-                -"5432:5432"
-            volumes:
-                - 3D-Dashboard-Database-volume:/var/lib/postgresql/data
-            networks:
-                - backend
-
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: 3D-Dashboard-DB
+        ports:
+            - "5432:5432"
+        volumes:
+            - 3D-Dashboard-Database-volume:/var/lib/postgresql/data
+        networks:
+            - backend
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres -d 3D-Dashboard-DB"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
 
 networks:
     frontend:
