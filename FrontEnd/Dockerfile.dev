@@ -1,13 +1,14 @@
 FROM node:24 AS development
 ENV NODE_ENV development
 
-COPY . ./3D-DashBoard/FrontEnd
+WORKDIR /cache
+COPY package.json .
+COPY package-lock.json .
+COPY tsconfig.json .
+RUN npm i 
 
-WORKDIR /3D-DashBoard/FrontEnd
-
-RUN npm install
-
+WORKDIR /app
+COPY . .
 EXPOSE 5173
 
-CMD ["npm", "run", "dev", "--", "--host"]
 

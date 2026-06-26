@@ -5,9 +5,44 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "./prisma/client"
+  output   = "./prismaClient"
 }
 
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Materials{
+  id Int @id @default(autoincrement())
+  name String
+  filaments Filaments[] //Relacion uno a muchos con Filamento
+}
+
+model Filaments{
+  id Int @id @default(autoincrement())
+  brand String
+  color String
+  wheight Float @db.DoublePrecision @default(0)     
+  materialId Int //Foreign key para relacionar con Material
+  material Materials @relation(fields: [materialId], references: [id]) //Relacion muchos a uno con Material (Un filamento tiene un material, un material tiene     muchos filamentos)
+  orders Orders[]  // Relacion muchos a muchos con Pedido
+}
+
+model Orders{
+  id Int @id @default(autoincrement())
+  client String
+  description String
+  createdAt DateTime @default(now())  
+  delivered Boolean @default(false)
+  filaments Filaments[] //Relacion muchos a muchos con Filamento
+}
+

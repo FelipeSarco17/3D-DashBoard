@@ -1,16 +1,14 @@
 #Usa como base la imagen oficial de Node.js
 FROM node:24 AS development
 ENV NODE_ENV development
-#Copia todos los archivos del proyecto en el directorio /3D-DashBoard/BackEnd del contendor
-COPY ./ ./3D-DashBoard/BackEnd
 
-# Establece el directorio de trabajo dentro del contenedor
-WORKDIR /3D-DashBoard/BackEnd/src
+WORKDIR /cache
+COPY package.json .
+COPY package-lock.json .
+RUN npm i
 
-# Instala las dependencias del proyecto
-RUN npm install
-
+WORKDIR /app
+COPY . .
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
 
