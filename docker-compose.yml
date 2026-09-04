@@ -30,9 +30,6 @@ services:
         networks:
             - frontend
             - backend
-        depends_on:
-            database:
-                condition: service_healthy
         command: >
             bash -c "cp -rfu /cache/node_modules/. /app/node_modules/  
             && npm run dev"
@@ -49,14 +46,9 @@ services:
         ports:
             - "5432:5432"
         volumes:
-            - 3D-Dashboard-Database-volume:/var/lib/3d-dashboard-db/data
+            - 3D-Dashboard-Database-volume:/var/lib/postgresql/data
         networks:
             - backend
-        healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U postgres -d 3D-Dashboard-DB"]
-            interval: 5s
-            timeout: 5s
-            retries: 5
 
 networks:
     frontend:
