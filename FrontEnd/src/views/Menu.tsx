@@ -12,7 +12,7 @@ const MenuPage = () => {
         <Aside />
       </div>
 
-      <section className='justify-self-center self-center col-span-8 h-screen'>
+      <section className=' self-center col-span-8 h-screen p-10 '>
         <Outlet />
       </section>
     </main>

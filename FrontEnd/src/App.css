@@ -5,6 +5,9 @@
   --color-background: #ffffff;
   --color-primary: #9929EA;
   --color-secondary: #5e007a;
-  
+  --color-neonPurple: #b026ff;
+  --color-neonCyan: #00e5ff;
+  --color-danger: #ef4444;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
 }
-
