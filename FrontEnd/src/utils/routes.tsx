@@ -1,13 +1,23 @@
-import MenuPage from '../views/MenuPage'
+import Menu from '../views/Menu'
+import Home from '../views/Home'
+import Sales from '../views/Sales'
 
 const routes = [
     {
         path: '/',
-        element: <MenuPage/>
+        Component: Menu,
+        children:[
+            {
+                index: true,
+                Component: Home
+            },
+            {
+                path:'sales',
+                Component: Sales
+            }
+        ]
     },
-    {
-        
-    }
+    
 ]
 
 
